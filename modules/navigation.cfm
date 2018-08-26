@@ -58,7 +58,7 @@
                 </li>
 
                 <li>
-                    <a href="index.cfm"><i class="fa fa-taxi fa-fw"></i> LSPD</a>
+                    <a href="index.cfm?content=lspd"><i class="fa fa-taxi fa-fw"></i> LSPD</a>
                 </li>
 
                 <li>
