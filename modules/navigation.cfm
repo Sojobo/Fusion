@@ -62,7 +62,7 @@
                 </li>
 
                 <li>
-                    <a href="index.cfm"><i class="fa fa-ambulance fa-fw"></i> LSMC</a>
+                    <a href="index.cfm?content=lsmc"><i class="fa fa-ambulance fa-fw"></i> LSMC</a>
                 </li>
 
                 <!--li>
