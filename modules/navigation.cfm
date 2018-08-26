@@ -54,7 +54,7 @@
                 </li>
 
                 <li>
-                    <a href="index.cfm"><i class="fa fa-car fa-fw"></i> Vehicles</a>
+                    <a href="index.cfm?content=vehicle"><i class="fa fa-car fa-fw"></i> Vehicles</a>
                 </li>
 
                 <li>

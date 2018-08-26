@@ -57,40 +57,40 @@
     </div>
 
     <div class="row">
-          <div class="card mb-3">
-            <div class="card-header">
-              <i class="fas fa-table"></i>
-              Vehicle Registrations</div>
-            <div class="card-body">
-              <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                  <thead>
-                    <tr>
-                      <th>Vehicle</th>
-                      <th>Owner</th>
-                      <th>Plate</th>
-                    </tr>
-                  </thead>
-                  <tfoot>
-                    <tr>
-                      <th>Vehicle</th>
-                      <th>Owner</th>
-                      <th>Plate</th>
-                    </tr>
-                  </tfoot>
-                  <tbody>
-                    <cfoutput query="carRegistrations">
-                      <tr>
-                        <td>#vehicle_name#</td>
-                        <td>#name#</td>
-                        <td>#vehicle_plate#</td>
-                      </tr>
-                    </cfoutput>
-                  </tbody>
-                </table>
-              </div>
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Vehicles
+                </div>
+                <div class="panel-body">
+                    <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-searchVehicles">
+                      <thead>
+                        <tr>
+                          <th>Vehicle</th>
+                          <th>Owner</th>
+                          <th>Plate</th>
+                        </tr>
+                      </thead>
+                      <tfoot>
+                        <tr>
+                          <th>Vehicle</th>
+                          <th>Owner</th>
+                          <th>Plate</th>
+                        </tr>
+                      </tfoot>
+                      <tbody>
+                        <cfoutput query="carRegistrations">
+                          <tr>
+                            <td>#vehicle_name#</td>
+                            <td>#name#</td>
+                            <td>#vehicle_plate#</td>
+                          </tr>
+                        </cfoutput>
+                      </tbody>
+                    </table>
+                </div>
             </div>
-          </div>
+        </div>
     </div>
     
 </div>
