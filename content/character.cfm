@@ -18,6 +18,14 @@
     ORDER BY id DESC
 </cfquery>
 
+<cfquery name="getInventory" datasource="FiveM">
+    SELECT *
+    FROM user_character_inventory
+    JOIN items ON user_character_inventory.item_id = items.id
+    WHERE character_id = 7176
+    AND quantity > 0
+</cfquery>
+
 <cfquery name="getWeapons" datasource="FiveM">
     SELECT *
     FROM weapons
@@ -57,7 +65,7 @@
         <div class="col-lg-4">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <i class="fa fa-info fa-fw"></i> General Info
+                    <i class="fa fa-info fa-fw"></i> Account Details
                 </div>
                 <div class="panel-body">
                     <cfoutput query="getCharacter">
@@ -100,13 +108,26 @@
         <div class="col-lg-4">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <i class="fa fa-exclamation-triangle fa-fw"></i> Warnings
+                    <i class="fa fa-bullseye fa-fw"></i> Weapons
                 </div>
                 <div class="panel-body">
-                    <cfoutput query="getWarnings">
-                        <strong>#reason#</strong>
+                    <cfoutput query="getWeapons">
+                        <strong>#weapon#</strong>
                         <p>
-                            <time class="timeago" datetime="#replace(left(timestamp, 19), " ", "T")#Z"></time>
+                            Location: #storage#
+                        </p>
+                    </cfoutput>
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <i class="fa fa-suitcase fa-fw"></i> Inventory
+                </div>
+                <div class="panel-body">
+                    <cfoutput query="getInventory">
+                        <p>
+                            x#quantity# #libelle# (#storage#)
                         </p>
                     </cfoutput>
                 </div>
@@ -130,13 +151,13 @@
 
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <i class="fa fa-bullseye fa-fw"></i> Weapons
+                    <i class="fa fa-exclamation-triangle fa-fw"></i> Warnings
                 </div>
                 <div class="panel-body">
-                    <cfoutput query="getWeapons">
-                        <strong>#weapon#</strong>
+                    <cfoutput query="getWarnings">
+                        <strong>#reason#</strong>
                         <p>
-                            Location: #storage#
+                            <time class="timeago" datetime="#replace(left(timestamp, 19), " ", "T")#Z"></time>
                         </p>
                     </cfoutput>
                 </div>
