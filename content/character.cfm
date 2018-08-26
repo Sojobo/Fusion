@@ -18,6 +18,23 @@
     ORDER BY id DESC
 </cfquery>
 
+<cfquery name="getWeapons" datasource="FiveM">
+    SELECT *
+    FROM weapons
+    WHERE (player = 7176 OR owner = "#getCharacter.identifier#")
+    AND storage >= 0
+    ORDER BY wid DESC
+</cfquery>
+
+<cfquery name="getTransactions" datasource="FiveM">
+    SELECT *
+    FROM user_character_transactions
+    JOIN transaction_types ON user_character_transactions.type = transaction_types.id
+    WHERE user_character_transactions.id = 7176
+    ORDER BY tid DESC
+    LIMIT 10
+</cfquery>
+
 <cfquery name="getMessages" datasource="FiveM">
     SELECT *, u1.`name` AS recipient, u2.`name` AS sender
     FROM user_character_messages
@@ -110,42 +127,90 @@
                     </cfoutput>
                 </div>
             </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <i class="fa fa-bullseye fa-fw"></i> Weapons
+                </div>
+                <div class="panel-body">
+                    <cfoutput query="getWeapons">
+                        <strong>#weapon#</strong>
+                        <p>
+                            Location: #storage#
+                        </p>
+                    </cfoutput>
+                </div>
+            </div>
         </div>
     </div>
 
     <div class="row">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <i class="fa fa-comments fa-fw"></i> Messages
-            </div>
-            <!-- /.panel-heading -->
-            <div class="panel-body">
-                <ul class="timeline">
-                    <cfoutput query="getMessages">
-                        <cfset sClass = "" />
-                        <cfset rClass = "" />
-                        <cfif from eq 7176><cfset sClass = "timeline-inverted" /></cfif>
-                        <cfif recipientRead eq 1><cfset rClass = "info" /></cfif>
-                        <cfif deleted eq 1><cfset rClass = "danger" /></cfif>
-                        <li class="#sClass#">
-                            <div class="timeline-badge #rClass#"><i class="fa fa-mobile"></i>
-                            </div>
-                            <div class="timeline-panel">
-                                <div class="timeline-heading">
-                                    <h4 class="timeline-title">#sender#</h4>
-                                    <p><small class="text-muted"><i class="fa fa-clock-o"></i> <time class="timeago" datetime="#replace(left(when, 19), " ", "T")#Z"></time></small>
-                                    </p>
+        <div class="col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <i class="fa fa-comments fa-fw"></i> Messages
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <ul class="timeline">
+                        <cfoutput query="getMessages">
+                            <cfset sClass = "" />
+                            <cfset rClass = "" />
+                            <cfif from eq 7176><cfset sClass = "timeline-inverted" /></cfif>
+                            <cfif recipientRead eq 1><cfset rClass = "info" /></cfif>
+                            <cfif deleted eq 1><cfset rClass = "danger" /></cfif>
+                            <li class="#sClass#">
+                                <div class="timeline-badge #rClass#"><i class="fa fa-mobile"></i>
                                 </div>
-                                <div class="timeline-body">
-                                    <p>#body#</p>
+                                <div class="timeline-panel">
+                                    <div class="timeline-heading">
+                                        <h4 class="timeline-title">#sender#</h4>
+                                        <p><small class="text-muted"><i class="fa fa-clock-o"></i> <time class="timeago" datetime="#replace(left(when, 19), " ", "T")#Z"></time></small>
+                                        </p>
+                                    </div>
+                                    <div class="timeline-body">
+                                        <p>#body#</p>
+                                    </div>
                                 </div>
-                            </div>
-                        </li>
-                    </cfoutput>
-                </ul>
+                            </li>
+                        </cfoutput>
+                    </ul>
+                </div>
+                <!-- /.panel-body -->
             </div>
-            <!-- /.panel-body -->
         </div>
-    </div>
+
+        <div class="col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <i class="fa fa-money fa-fw"></i> Transactions
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <ul class="timeline">
+                        <cfoutput query="getTransactions">
+                            <cfset sClass = "" />
+                            <cfset rClass = "success" />
+                            <cfif type gte 20><cfset sClass = "timeline-inverted" /><cfset rClass = "danger" /></cfif>
+                            <li class="#sClass#">
+                                <div class="timeline-badge #rClass#"><i class="fa fa-money"></i>
+                                </div>
+                                <div class="timeline-panel">
+                                    <div class="timeline-heading">
+                                        <h4 class="timeline-title">#description#</h4>
+                                        <p><small class="text-muted"><i class="fa fa-clock-o"></i> <time class="timeago" datetime="#replace(left(timestamp, 19), " ", "T")#Z"></time></small>
+                                        </p>
+                                    </div>
+                                    <div class="timeline-body">
+                                        <p>#amount#</p>
+                                    </div>
+                                </div>
+                            </li>
+                        </cfoutput>
+                    </ul>
+                </div>
+                <!-- /.panel-body -->
+            </div>
+        </div>
 
 </div>
