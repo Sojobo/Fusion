@@ -50,7 +50,7 @@
                 </li>
 
                 <li>
-                    <a href="index.cfm"><i class="fa fa-user fa-fw"></i> Users</a>
+                    <a href="index.cfm?content=character"><i class="fa fa-user fa-fw"></i> Users</a>
                 </li>
 
                 <li>

@@ -78,11 +78,14 @@
     <!-- Custom Theme JavaScript -->
     <script src="dist/js/sb-admin-2.js"></script>
 
-	<cfif IsDefined("url.content")>
-		<cfinclude template="functions/script/#url.content#.cfm" />
-	<cfelse>
-		<cfinclude template="functions/script/dashboard.cfm" />
-	</cfif>
+	<cftry>
+		<cfif IsDefined("url.content")>
+			<cfinclude template="functions/script/#url.content#.cfm" />
+		<cfelse>
+			<cfinclude template="functions/script/dashboard.cfm" />
+		</cfif>
+	<cfcatch></cfcatch>
+	</cftry>
 
 	<script>
 		jQuery(document).ready(function() {

@@ -37,7 +37,7 @@
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">Dashboard</h1>
+            <h1 class="page-header"><cfoutput>#vehname#</cfoutput></h1>
         </div>
     </div>
 
@@ -46,7 +46,7 @@
             
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <i class="fa fa-bar-chart-o fa-fw"></i> <cfoutput>#vehname#</cfoutput> Sales
+                    <i class="fa fa-bar-chart-o fa-fw"></i> Marketplace Sales
                 </div>
                 <div class="panel-body">
                     <canvas id="carMarketSales"></canvas>
@@ -60,7 +60,7 @@
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    Vehicles
+                    Registration Information
                 </div>
                 <div class="panel-body">
                     <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-searchVehicles">
