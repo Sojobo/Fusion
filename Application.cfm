@@ -28,35 +28,35 @@
 	}
 </cfscript>
 
-<cfoutput>#getClientIp()#</cfoutput>
 <cflogin>
-	<cfif isDefined("form.email")>logging in..
-		<cfquery name="loginUser" datasource="FiveM">
+	<cfif isDefined("form.email")>
+		<cfquery name="forumUser" datasource="Forums">
 			SELECT *
-			FROM users
-			WHERE username = "#form.email#"
-			AND `group` = "#form.password#"
+			FROM core_members_known_ip_addresses
+			JOIN core_members ON core_members_known_ip_addresses.member_id = core_members.member_id
+			WHERE core_members_known_ip_addresses.ip_address = "#getClientIp()#"
+			AND core_members.email = "#form.email#"
+			ORDER BY last_seen DESC
 			LIMIT 1
 		</cfquery>
 
-		<cfquery name="loginUser" datasource="FiveM">
+		<cfquery name="strpUser" datasource="FiveM">
 			SELECT *
 			FROM users
-			WHERE username = "#form.email#"
-			AND `group` = "#form.password#"
+			WHERE lastip = "#getClientIp()#"
 			LIMIT 1
 		</cfquery>
 
-		<cfif loginUser.recordcount gt 0>logged in
+		<cfif forumUser.recordcount gt 0 and strpUser.recordcount gt 0>logged in
 			<cfloginuser name = "#form.email#" password = "#form.password#" roles = "user" >
 		<cfelse>login failed
 			<cfinclude template="login.cfm"> 
 			<cfabort>
 		</cfif>
-	<cfelseif NOT IsDefined("cflogin")>not logged in
+	<cfelseif NOT IsDefined("cflogin")>
 		<cfinclude template="login.cfm"> 
 		<cfabort>
-	<cfelse>logged in
+	<cfelse>
 
 	</cfif> 
 </cflogin>
