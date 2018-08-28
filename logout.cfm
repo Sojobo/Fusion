@@ -1,2 +1,2 @@
 <cflogout>
-<cfinclude template="login.cfm"> 
+<cflocation url="login.cfm"> 

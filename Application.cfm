@@ -29,7 +29,7 @@
 </cfscript>
 
 <cflogin>
-	<cfif isDefined("form.email")>
+	<cfif isDefined("form.email")>login attempt.. 
 		<cfquery name="forumUser" datasource="Forums">
 			SELECT *
 			FROM core_members_known_ip_addresses
@@ -49,19 +49,21 @@
 
 		<cfif forumUser.recordcount gt 0 and strpUser.recordcount gt 0>logged in
 			<cfloginuser name = "#form.email#" password = "#form.password#" roles = "user" >
-		<cfelse>login failed
+		<cfelse>not found
 			<cfinclude template="login.cfm"> 
 			<cfabort>
 		</cfif>
-	<cfelseif NOT IsDefined("cflogin")>
+	<cfelseif NOT IsDefined("cflogin")>nope
 		<cfinclude template="login.cfm"> 
 		<cfabort>
-	<cfelse>
+	<cfelse>in
 
 	</cfif> 
 </cflogin>
 
-<cfif not IsUserLoggedIn() > 
+<cfif not IsUserLoggedIn() >not logged in
 	<cfinclude template="login.cfm"> 
 	<cfabort> 
+<cfelse>
+	<cfoutput>#GetAuthUser()#</cfoutput>
 </cfif>

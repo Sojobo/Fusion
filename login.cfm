@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<cfif IsUserLoggedIn() >
+    <cflocation url="index.cfm">
+</cfif>
+
 <head>
 
     <meta charset="utf-8">
