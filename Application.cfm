@@ -2,7 +2,9 @@
 <cfapplication
 	name = "Fusion" 
 	scriptprotect = "all"
-	sessionmanagement="true" />
+	sessionmanagement = "true"
+	sessiontimeout = #CreateTimeSpan(0, 12, 0, 0)#
+	loginStorage = "session" />
 
 <cfscript>
 	public string function getClientIp() {
@@ -29,7 +31,7 @@
 	}
 </cfscript>
 
-<cflogin>
+<cflogin idletimeout="43200" allowconcurrent="false">
 	<cfif isDefined("form.email")>login attempt.. 
 		<cfquery name="forumUser" datasource="Forums">
 			SELECT *
