@@ -1,7 +1,8 @@
 <!-- Protect from XSS attacks -->
 <cfapplication
 	name = "Fusion" 
-	scriptprotect = "all" />
+	scriptprotect = "all"
+	sessionmanagement="true" />
 
 <cfscript>
 	public string function getClientIp() {
@@ -48,7 +49,8 @@
 		</cfquery>
 
 		<cfif forumUser.recordcount gt 0 and strpUser.recordcount gt 0>logged in
-			<cfloginuser name = "#form.email#" password = "#form.password#" roles = "user" >
+			<cfloginuser name = "#strpUser.username#" password = "#form.password#" roles = "user" >
+			<cfset session.steamid = #strpUser.identifier# />
 		<cfelse>not found
 			<cfinclude template="login.cfm"> 
 			<cfabort>
