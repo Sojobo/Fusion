@@ -50,9 +50,54 @@
 			LIMIT 1
 		</cfquery>
 
+		<cfset myRoles = "user" />
+
 		<cfif forumUser.recordcount gt 0 and strpUser.recordcount gt 0>logged in
-			<cfloginuser name = "#strpUser.username#" password = "#form.password#" roles = "user" >
+			<cfset myRoles = "#myRoles#,#strpUser.group#" />
 			<cfset session.steamid = #strpUser.identifier# />
+
+			<cfquery name="getCharacters" datasource="FiveM">
+			    SELECT id
+			    FROM user_characters
+			    WHERE identifier = "#session.steamid#"
+			</cfquery>
+			<cfset policeRank = 0 />
+			<cfset medicRank = 0 />
+
+			<cfoutput query="getCharacters">
+				<cfquery name="getPoliceRank" datasource="FiveM">
+				    SELECT rank
+				    FROM police
+				    WHERE identifier = "#id#"
+				    ORDER BY rank DESC
+				    LIMIT 1
+				</cfquery>
+				<cfif getPoliceRank.recordcount gt 0 and getPoliceRank.rank gt policeRank>
+					<cfset policeRank = #getPoliceRank.rank# />
+				</cfif>
+
+				<cfquery name="getMedicRank" datasource="FiveM">
+				    SELECT rank
+				    FROM medic
+				    WHERE identifier = "#id#"
+				    ORDER BY rank DESC
+				    LIMIT 1
+				</cfquery>
+				<cfif getMedicRank.recordcount gt 0 and getMedicRank.rank gt medicRank>
+					<cfset medicRank = #getMedicRank.rank# />
+				</cfif>
+			</cfoutput>
+
+
+			<cfif policeRank gt 0>
+				<cfset myRoles = "#myRoles#,Police#policeRank#" />
+			</cfif>
+			<cfif medicRank gt 0>
+				<cfset myRoles = "#myRoles#,Medic#medicRank#" />
+			</cfif>
+
+			<cfoutput>#myRoles#</cfoutput>
+			<cfloginuser name = "#strpUser.username#" password = "#form.password#" roles = "user" >
 		<cfelse>not found
 			<cfinclude template="login.cfm"> 
 			<cfabort>
