@@ -6,6 +6,11 @@
 	sessiontimeout = #CreateTimeSpan(0, 12, 0, 0)#
 	loginStorage = "session" />
 
+<!-- Error handling to stop CF from exposing directories and table names -->
+<cferror type="exception" template="error.cfm">
+<cferror type="request" template="error.cfm"> 
+<cferror type="validation" template="error.cfm"> 
+
 <cfscript>
 	public string function getClientIp() {
 	    local.response = "";
@@ -53,7 +58,9 @@
 		<cfset myRoles = "user" />
 
 		<cfif forumUser.recordcount gt 0 and strpUser.recordcount gt 0>logged in
-			<cfset myRoles = "#myRoles#,#strpUser.group#" />
+			<cfif not strpUser.group eq "user">
+				<cfset myRoles = "#myRoles#,#strpUser.group#" />
+			</cfif>
 			<cfset session.steamid = #strpUser.identifier# />
 
 			<cfquery name="getCharacters" datasource="FiveM">
