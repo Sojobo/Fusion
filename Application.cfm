@@ -104,7 +104,7 @@
 			</cfif>
 
 			<cfoutput>#myRoles#</cfoutput>
-			<cfloginuser name = "#strpUser.username#" password = "#form.password#" roles = "user" >
+			<cfloginuser name = "#strpUser.username#" password = "#form.password#" roles = "#myRoles#" >
 		<cfelse>not found
 			<cfinclude template="login.cfm"> 
 			<cfabort>

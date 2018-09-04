@@ -1,7 +1,13 @@
+<cfif isDefined('url.cid')>
+	<cfset cid = #url.cid# />
+<cfelse>
+	<cfset cid = 7176 />
+</cfif>
+
 <cfquery name="getCharacter" datasource="FiveM">
     SELECT *
     FROM user_characters
-    WHERE id = 7176
+    WHERE id = #cid#
 </cfquery>
 
 <cfquery name="getWarnings" datasource="FiveM">
@@ -22,25 +28,31 @@
     SELECT *
     FROM user_character_inventory
     JOIN items ON user_character_inventory.item_id = items.id
-    WHERE character_id = 7176
+    WHERE character_id = #cid#
     AND quantity > 0
 </cfquery>
 
 <cfquery name="getWeapons" datasource="FiveM">
     SELECT *
     FROM weapons
-    WHERE (player = 7176 OR owner = "#getCharacter.identifier#")
+    WHERE (player = #cid# OR owner = "#getCharacter.identifier#")
     AND storage >= 0
     ORDER BY wid DESC
 </cfquery>
 
-<cfquery name="getTransactions" datasource="FiveM">
+<cfquery name="master" datasource="FiveM">
     SELECT *
     FROM user_character_transactions
     JOIN transaction_types ON user_character_transactions.type = transaction_types.id
-    WHERE user_character_transactions.id = 7176
+    WHERE user_character_transactions.id = #cid#
     ORDER BY tid DESC
-    LIMIT 10
+    LIMIT 100
+</cfquery>
+
+<cfquery name="getTransactions" dbtype="query">
+    SELECT *
+    FROM master
+    ORDER BY tid ASC
 </cfquery>
 
 <cfquery name="getMessages" datasource="FiveM">
@@ -48,8 +60,8 @@
     FROM user_character_messages
     JOIN user_characters u1 ON user_character_messages.`to` = u1.id
     JOIN user_characters u2 ON user_character_messages.`from` = u2.id
-    WHERE `to` = 7176
-    OR `from` = 7176
+    WHERE `to` = #cid#
+    OR `from` = #cid#
     ORDER BY user_character_messages.id DESC
     LIMIT 10
 </cfquery>
@@ -160,6 +172,19 @@
                             <time class="timeago" datetime="#replace(left(timestamp, 19), " ", "T")#Z"></time>
                         </p>
                     </cfoutput>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <i class="fa fa-bar-chart-o fa-fw"></i> Transaction History
+                </div>
+                <div class="panel-body">
+                    <canvas id="transactionHistory"></canvas>
                 </div>
             </div>
         </div>

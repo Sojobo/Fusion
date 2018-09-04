@@ -49,21 +49,27 @@
                     <a href="index.cfm"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                 </li>
 
-                <li>
-                    <a href="index.cfm?content=character"><i class="fa fa-user fa-fw"></i> Users</a>
-                </li>
+                <cfif IsUserInRole("owner") or IsUserInRole("superadmin") or IsUserInRole("admin") or IsUserInRole("mod")>
+                    <li>
+                        <a href="index.cfm?content=character"><i class="fa fa-user fa-fw"></i> Users</a>
+                    </li>
+                </cfif>
 
                 <li>
                     <a href="index.cfm?content=vehicle"><i class="fa fa-car fa-fw"></i> Vehicles</a>
                 </li>
 
-                <li>
-                    <a href="index.cfm?content=lspd"><i class="fa fa-taxi fa-fw"></i> LSPD</a>
-                </li>
+                 <cfif IsUserInRole("Police7") or IsUserInRole("Police6") or IsUserInRole("Police5") or IsUserInRole("Police4") or IsUserInRole("Police3") or IsUserInRole("Police2") or IsUserInRole("Police1")>
+                   <li>
+                        <a href="index.cfm?content=lspd"><i class="fa fa-taxi fa-fw"></i> LSPD</a>
+                    </li>
+                </cfif>
 
-                <li>
-                    <a href="index.cfm?content=lsmc"><i class="fa fa-ambulance fa-fw"></i> LSMC</a>
-                </li>
+                 <cfif IsUserInRole("Medic7") or IsUserInRole("Medic6") or IsUserInRole("Medic5") or IsUserInRole("Medic4") or IsUserInRole("Medic3") or IsUserInRole("Medic2") or IsUserInRole("Medic1")>
+                    <li>
+                        <a href="index.cfm?content=lsmc"><i class="fa fa-ambulance fa-fw"></i> LSMC</a>
+                    </li>
+                </cfif>
 
                 <!--li>
                     <a href="tables.html"><i class="fa fa-table fa-fw"></i> Tables</a>
