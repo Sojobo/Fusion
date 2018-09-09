@@ -59,13 +59,13 @@
                     <a href="index.cfm?content=vehicle"><i class="fa fa-car fa-fw"></i> Vehicles</a>
                 </li>
 
-                 <cfif IsUserInRole("Police7") or IsUserInRole("Police6") or IsUserInRole("Police5") or IsUserInRole("Police4") or IsUserInRole("Police3") or IsUserInRole("Police2") or IsUserInRole("Police1")>
+                 <cfif IsUserInRole("Police")>
                    <li>
                         <a href="index.cfm?content=lspd"><i class="fa fa-taxi fa-fw"></i> LSPD</a>
                     </li>
                 </cfif>
 
-                 <cfif IsUserInRole("Medic7") or IsUserInRole("Medic6") or IsUserInRole("Medic5") or IsUserInRole("Medic4") or IsUserInRole("Medic3") or IsUserInRole("Medic2") or IsUserInRole("Medic1")>
+                 <cfif IsUserInRole("Medic")>
                     <li>
                         <a href="index.cfm?content=lsmc"><i class="fa fa-ambulance fa-fw"></i> LSMC</a>
                     </li>

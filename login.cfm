@@ -27,13 +27,15 @@
     <!-- Custom Fonts -->
     <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
+    <!-- Sweet Alerts 2 -->
+    <link href="vendor/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css">
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-
 </head>
 
 <body>
@@ -46,7 +48,7 @@
                         <h3 class="panel-title">Please Sign In</h3>
                     </div>
                     <div class="panel-body">
-                        <form action="index.cfm" method="post" role="form">
+                        <form action="functions/login.cfm" method="post" role="form" id="loginForm">
                             <fieldset>
                                 <div class="form-group">
                                     <input class="form-control" placeholder="E-mail" name="email" type="email" autofocus>
@@ -82,6 +84,40 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="dist/js/sb-admin-2.js"></script>
+
+    <!-- Sweet Alerts 2 -->
+    <script src="vendor/sweetalert2/sweetalert2.min.js"></script>
+    
+    <script>
+        $("#loginForm").submit(function(e) {
+            var form = $(this);
+            var url = form.attr('action');
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: form.serialize(), // serializes the form's elements.
+                success: function(data)
+                {
+                    if ( data.includes("success") ) {
+                        $(location).attr('href', 'index.cfm')
+                    }
+                    else {
+                        var problem = "Something went wrong!";
+                        if ( data.includes("fail-pass") || data.includes("fail-account") ) {
+                            problem = "Incorrect username and/or password.";
+                        }
+                        swal({
+                            type: 'error',
+                            title: 'Oops...',
+                            text: problem,
+                            footer: '<a href>Forgot password?</a>'
+                        })
+                    }
+                }
+            });
+            e.preventDefault(); // avoid to execute the actual submit of the form.
+        });
+    </script>
 
 </body>
 
